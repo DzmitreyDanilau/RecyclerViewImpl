@@ -23,7 +23,6 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
     protected abstract fun getViewModelClass(): KClass<V>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initViewModel()
         super.onCreate(savedInstanceState)
     }
 
@@ -33,10 +32,6 @@ abstract class BaseFragment<V : ViewModel> : Fragment() {
         return inflater.inflate(fragmentResId, container, false)
     }
 
-
-    fun initViewModel() {
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass().java)
-    }
 
 }
 

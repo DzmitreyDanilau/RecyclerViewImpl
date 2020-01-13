@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recyclerviewimpl.R
@@ -70,6 +71,10 @@ class RecyclerFragment : BaseFragment<RecyclerViewModel>() {
 
     private fun initUi() {
         progressBar = progress_bar
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass().java)
     }
 
     private fun setItemList(itemList: List<Item>) {

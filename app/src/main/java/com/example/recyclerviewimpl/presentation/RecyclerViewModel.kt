@@ -25,19 +25,20 @@ class RecyclerViewModel @Inject constructor(private val interactor: Interactor) 
         interactor.fetchData()
             .subscribeOn(Schedulers.io())
             .doOnSuccess {
-                Timber.d("Response: $it") }
+                Timber.d("Response: $it")
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .toIrw()
             .subscribe {
                 when (it) {
                     is InteractorResponseWrapper.Data -> {
-                        State.Data(it.data)
+                        state.value = State.Data(it.data)
                     }
                     is InteractorResponseWrapper.Error -> {
-                        State.Error(it.error)
+                        state.value = State.Error(it.error)
                     }
                     is InteractorResponseWrapper.Progress -> {
-                        State.Progress
+                        state.value = State.Progress
                     }
                 }
             }.unSubscriveOnDestroy()
