@@ -39,6 +39,7 @@ class RecyclerFragment : BaseFragment<RecyclerViewModel>() {
         initRecyclerView()
         initUi()
         observeObservables()
+        viewModel.fetchData()
     }
 
     private fun initRecyclerView() {
@@ -49,7 +50,7 @@ class RecyclerFragment : BaseFragment<RecyclerViewModel>() {
         }
     }
 
-    fun observeObservables(){
+    private fun observeObservables() {
         viewModel.getState().observe(this) {
             when (it) {
                 is RecyclerViewModel.State.Data -> {
