@@ -9,11 +9,11 @@ class RepositoryImpl @Inject constructor() : Repository {
     private val itemList: MutableList<Item> = mutableListOf(
         Item(
             0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
-            "Item #1", 124.031133231
+            "Item #1", 0.00
         ),
         Item(
             1, "https://upload.wikimedia.org/wikipedia/commons/2/29/Beetroot_jm26647.jpg",
-            "Item #2", 24.031133231
+            "Item #2", 0.00
         ),
         Item(
             1,

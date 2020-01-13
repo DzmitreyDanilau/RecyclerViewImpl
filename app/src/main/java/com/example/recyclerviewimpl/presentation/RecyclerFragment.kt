@@ -78,8 +78,7 @@ class RecyclerFragment : BaseFragment<RecyclerViewModel>() {
     }
 
     private fun setItemList(itemList: List<Item>) {
-        recyclerViewAdapter.getItemList().addAll(itemList)
-        recyclerViewAdapter.notifyDataSetChanged()
+        recyclerViewAdapter.submitList(itemList)
     }
 
     private fun showProgress() {

@@ -1,10 +1,7 @@
 package com.example.recyclerviewimpl.presentation.views
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.Rect
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -28,12 +25,13 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val arrowWidth: Float
     private var arrowHeight: Float
     private var isPositive: Boolean
+    private var arrowColor = 0
 
     init {
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.Arrow, 0, 0)
         arrowPaint.color = typedArray.getColor(
-            R.styleable.Arrow_color_positive,
-            ContextCompat.getColor(context, R.color.arrowColor_positive)
+            R.styleable.Arrow_color_negative,
+            ContextCompat.getColor(context, R.color.arrowColor_negative)
         )
         arrowWidth = (0.5f * resources.displayMetrics.density)
         arrowPaint.strokeWidth = arrowWidth * resources.displayMetrics.density
@@ -47,7 +45,8 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawArrow(isPositive, canvas)
+//        drawArrow(isPositive, canvas)
+        drawArrow(canvas)
         invalidate()
     }
 
@@ -72,25 +71,29 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
 
-    private fun drawArrow(isPositive: Boolean, canvas: Canvas) {
-        if (isPositive) drawPositiveArrow(canvas) else drawNegativeArrow(canvas)
-    }
+//    private fun drawArrow(isPositive: Boolean, canvas: Canvas) {
+//        if (isPositive) drawPositiveArrow(canvas) else drawArrow(canvas)
+//    }
 
-    private fun drawPositiveArrow(canvas: Canvas) {
-        canvas.drawLine(10f, arrowHeight, 10f, arrowHeight - arrowHeight * 0.55f, arrowPaint)
-        canvas.drawLine(15f, arrowHeight, 15f, arrowHeight - arrowHeight * 0.55f, arrowPaint)
-        canvas
-            .drawLine(10f, arrowHeight - 1, 15f, arrowHeight - 1, arrowPaint)
+//    private fun drawPositiveArrow(canvas: Canvas) {
+//        canvas.drawLine(10f, arrowHeight, 10f, arrowHeight - arrowHeight * 0.55f, arrowPaint)
+//        canvas.drawLine(15f, arrowHeight, 15f, arrowHeight - arrowHeight * 0.55f, arrowPaint)
+//        canvas
+//            .drawLine(10f, arrowHeight - 1, 15f, arrowHeight - 1, arrowPaint)
+//
+//    }
 
-    }
-
-    private fun drawNegativeArrow(canvas: Canvas) {
+    private fun drawArrow(canvas: Canvas) {
         canvas.drawLine(12.5f, arrowHeight * 0.7f, 25f, (arrowHeight * 0.55f) - 1, arrowPaint)
         canvas.drawLine(25f, (arrowHeight * 0.55f) - 1, 0f, (arrowHeight * 0.55f) - 1, arrowPaint)
-        canvas.drawLine(0f, (arrowHeight * 0.55f) - 1,12.5f, arrowHeight * 0.7f,arrowPaint)
+        canvas.drawLine(0f, (arrowHeight * 0.55f) - 1, 12.5f, arrowHeight * 0.7f, arrowPaint)
         canvas.drawLine(10f, 2f, 10f, arrowHeight * 0.55f, arrowPaint)
         canvas.drawLine(15f, 2f, 15f, arrowHeight * 0.55f, arrowPaint)
         canvas.drawLine(11f, 3f, 16f, 3f, arrowPaint)
+    }
+
+    fun setNegativeColor() {
+        arrowColor = ContextCompat.getColor(context, R.color.arrowColor_positive)
     }
 
 }

@@ -14,6 +14,7 @@ class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val itemImage = view.img_item_image
     private val itemTitle = view.tv_item_title
     private val itemCost = view.tv_item_cost
+    private val arrow = view.arrow
 
     fun bind(item: Item) {
         val glideRequest = RequestOptions().placeholder(R.drawable.ic_launcher_background)
@@ -24,7 +25,18 @@ class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             .error(R.drawable.ic_error_black_24dp)
             .into(itemImage)
         itemTitle.text = item.title
+        //TODO refactor
         val a = BigDecimal(item.cost).setScale(2, BigDecimal.ROUND_DOWN).toString()
+        setArrowRotation(BigDecimal(item.cost).setScale(2, BigDecimal.ROUND_DOWN).toInt())
         itemCost.text = a
+    }
+
+    private fun setArrowRotation(costValue: Int) {
+        if (costValue > 0) {
+            arrow.animate().rotation(180f).duration = 1000
+            arrow.setNegativeColor()
+        } else if (costValue == 0) {
+            arrow.visibility = View.INVISIBLE
+        }
     }
 }
