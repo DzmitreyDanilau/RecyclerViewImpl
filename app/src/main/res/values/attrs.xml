@@ -3,6 +3,7 @@
     <declare-styleable name="Arrow">
         <attr name="isAnimated" format="boolean" />
         <attr name="onDenied" format="boolean" />
+        <attr name="isPositive" format="boolean" />
         <attr name="color_positive" format="color" />
         <attr name="color_negative" format="color" />
         <attr name="arrow_height" format="dimension" />

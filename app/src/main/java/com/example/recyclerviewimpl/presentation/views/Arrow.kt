@@ -3,6 +3,8 @@ package com.example.recyclerviewimpl.presentation.views
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -17,12 +19,15 @@ onMeasure() - call when system must know size of the view
 setMeasuresDemensions() - by this method we set new size
  */
 const val ARROW_HEIGHT_DEF = 100F
+const val ARROW_IS_POSITIVE_DEF = true
+
 
 class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
     // Set up paints for canvas drawing.
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val arrowWidth = 4f
-    private var arrowHeight = 0f
+    private val arrowWidth: Float
+    private var arrowHeight: Float
+    private var isPositive: Boolean
 
     init {
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.Arrow, 0, 0)
@@ -30,26 +35,20 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
             R.styleable.Arrow_color_positive,
             ContextCompat.getColor(context, R.color.arrowColor_positive)
         )
-        arrowPaint.strokeWidth = arrowWidth
-        arrowHeight = typedArray.getDimension(R.styleable.Arrow_arrow_height, ARROW_HEIGHT_DEF)
-
+        arrowWidth = (0.5f * resources.displayMetrics.density)
+        arrowPaint.strokeWidth = arrowWidth * resources.displayMetrics.density
+        arrowHeight = (typedArray.getDimension(
+            R.styleable.Arrow_arrow_height,
+            ARROW_HEIGHT_DEF
+        ) * resources.displayMetrics.density).roundToInt().toFloat()
+        isPositive = typedArray.getBoolean(R.styleable.Arrow_isPositive, ARROW_IS_POSITIVE_DEF)
         typedArray.recycle()
-
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawPositiveArrow(canvas)
+        drawArrow(isPositive, canvas)
         invalidate()
-    }
-
-
-    private fun drawPositiveArrow(canvas: Canvas) {
-        canvas.drawLine(15f, 5f, 15f, arrowHeight - 150, arrowPaint)
-        canvas.drawLine(30f, 5f, 30f, arrowHeight - 150, arrowPaint)
-        canvas.drawLine(15f, 5f, 30f, 5f, arrowPaint)
-        canvas.drawLine(30f, 5f, 30f, arrowHeight - 150, arrowPaint)
-
     }
 
 
@@ -72,17 +71,27 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
     }
 
-    private fun initLinePaint() {
-        val paint = Paint()
-        paint.apply {
-            strokeWidth = 2f
-            style = Paint.Style.FILL
 
-        }
+    private fun drawArrow(isPositive: Boolean, canvas: Canvas) {
+        if (isPositive) drawPositiveArrow(canvas) else drawNegativeArrow(canvas)
     }
 
-    private fun initTrianglePaint() {
+    private fun drawPositiveArrow(canvas: Canvas) {
+        canvas.drawLine(10f, arrowHeight, 10f, arrowHeight - arrowHeight * 0.55f, arrowPaint)
+        canvas.drawLine(15f, arrowHeight, 15f, arrowHeight - arrowHeight * 0.55f, arrowPaint)
+        canvas
+            .drawLine(10f, arrowHeight - 1, 15f, arrowHeight - 1, arrowPaint)
 
     }
+
+    private fun drawNegativeArrow(canvas: Canvas) {
+        canvas.drawLine(12.5f, arrowHeight * 0.7f, 25f, (arrowHeight * 0.55f) - 1, arrowPaint)
+        canvas.drawLine(25f, (arrowHeight * 0.55f) - 1, 0f, (arrowHeight * 0.55f) - 1, arrowPaint)
+        canvas.drawLine(0f, (arrowHeight * 0.55f) - 1,12.5f, arrowHeight * 0.7f,arrowPaint)
+        canvas.drawLine(10f, 2f, 10f, arrowHeight * 0.55f, arrowPaint)
+        canvas.drawLine(15f, 2f, 15f, arrowHeight * 0.55f, arrowPaint)
+        canvas.drawLine(11f, 3f, 16f, 3f, arrowPaint)
+    }
+
 }
 
