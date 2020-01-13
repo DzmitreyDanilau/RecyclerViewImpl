@@ -2,6 +2,6 @@
 <resources>
     <dimen name="image_item_img_width">300dp</dimen>
     <dimen name="image_item_img_height">250dp</dimen>
-    <dimen name="app_matgon_top">8dp</dimen>
+    <dimen name="app_margin">8dp</dimen>
     <dimen name="text_item_img_size">50dp</dimen>
 </resources>

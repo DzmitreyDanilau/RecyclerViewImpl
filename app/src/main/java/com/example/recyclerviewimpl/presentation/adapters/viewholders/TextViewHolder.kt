@@ -7,6 +7,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.recyclerviewimpl.R
 import com.example.recyclerviewimpl.data.models.Item
 import kotlinx.android.synthetic.main.text_item.view.*
+import java.math.BigDecimal
 
 class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -23,6 +24,7 @@ class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             .error(R.drawable.ic_error_black_24dp)
             .into(itemImage)
         itemTitle.text = item.title
-        itemCost.text = itemCost.toString()
+        val a = BigDecimal(item.cost).setScale(2, BigDecimal.ROUND_DOWN).toString()
+        itemCost.text = a
     }
 }

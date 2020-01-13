@@ -9,38 +9,38 @@ class RepositoryImpl @Inject constructor() : Repository {
     private val itemList: MutableList<Item> = mutableListOf(
         Item(
             0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
-            "Item #1", 12333125551123L
+            "Item #1", 124.031133231
         ),
         Item(
             1, "https://upload.wikimedia.org/wikipedia/commons/2/29/Beetroot_jm26647.jpg",
-            "Item #2", 18899899883L
+            "Item #2", 24.031133231
         ),
         Item(
             1,
             "https://upload.wikimedia.org/wikipedia/commons/5/51/A_scene_of_Coriander_leaves.JPG",
             "Item #3",
-            999898908888L
+            999898.908888
         ),
         Item(
             0,
             "https://upload.wikimedia.org/wikipedia/commons/e/e4/Branch_and_fruit_of_the_Maluma_avocado_cultivar.jpg",
             "Item #4",
-            555434324234L
+            555.434324234
         ),
         Item(
             1, "https://upload.wikimedia.org/wikipedia/commons/0/03/Grape_Plant_and_grapes9.jpg",
-            "Item #5", 77787778787878L
+            "Item #5", 777.87778787878
         ),
         Item(
             1,
             "https://upload.wikimedia.org/wikipedia/commons/2/22/Apfelsinenbaum--Orange_tree.jpg",
             "Item #6",
-            123455976678L
+            12.3455976678
         )
     )
 
     override fun fetchData(): Single<List<Item>> {
         itemList.shuffle()
-        return Single.create { itemList }
+        return Single.just(itemList)
     }
 }
