@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.example.recyclerviewimpl.R
 import kotlin.math.roundToInt
@@ -23,7 +23,7 @@ private const val ARROW_HEIGHT_DEF = 10F
 /**
  *Set arrow behaviour is it positive/negative
  */
-private const val ARROW_IS_POSITIVE_DEF = true
+private const val ARROW_STATE_DEF = true
 /**
  * Distance between to lines of the arrow
  */
@@ -47,13 +47,18 @@ private const val TRIANGLE_HEIGHT = 0.9
  */
 private const val ARROW_PAINT_WIDTH = 0.4f
 
-class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
+/**
+ * Animation duration
+ */
+private var ANIMATION_DURATION = 1000
+
+class Arrow(context: Context, attrs: AttributeSet) : ImageView(context, attrs) {
 
     // Set up paints for canvas drawing.
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val arrowWidth: Float
     private var arrowHeight: Float
-    private var isPositive: Boolean
+    private var arrowState: Boolean
     private var arrowColor = 0
     private var negativeColor: Int
     private var positiveColor: Int
@@ -76,14 +81,13 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
             ARROW_HEIGHT_DEF
         ) * resources.displayMetrics.density).roundToInt().toFloat()
         isAnimated = typedArray.getBoolean(R.styleable.Arrow_isAnimated, true)
-        isPositive = typedArray.getBoolean(R.styleable.Arrow_isPositive, ARROW_IS_POSITIVE_DEF)
-
+        arrowState = typedArray.getBoolean(R.styleable.Arrow_isPositive, ARROW_STATE_DEF)
         typedArray.recycle()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-//        setColor(isPositive)
+        setColor(arrowState)
         drawArrow(canvas)
         invalidate()
     }
@@ -163,15 +167,18 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun setColor(flag: Boolean) {
-        if (flag) {
-            arrowPaint.color = positiveColor
-        } else arrowPaint.color = negativeColor
+        arrowPaint.color = positiveColor
     }
 
-    fun setBehaviour(behviour: Boolean) {
-        isPositive = behviour
+    fun setState(behviour: Boolean) {
+        arrowState = behviour
     }
 
+    fun swapColor() {
+        if (arrowPaint.color == positiveColor) {
+            arrowPaint.color = negativeColor
+        } else arrowPaint.color = positiveColor
+    }
 
     fun isAnimated(): Boolean = isAnimated
 
@@ -179,11 +186,16 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
         isAnimated = flag
     }
 
+    fun getAnimationDurration() = ANIMATION_DURATION
 
-    private
+    fun setAnimationDuration(duration: Int) {
+        ANIMATION_DURATION = duration
+    }
+
 
     val pointA = Point(START_LINE_ONE_X + DISTANCE / 2, (arrowHeight * SPEARHEAD_ARROW).toInt())
-    private val pointB = Point(START_LINE_ONE_X + DISTANCE * 2, (arrowHeight * TRIANGLE_HEIGHT).toInt())
+    private val pointB =
+        Point(START_LINE_ONE_X + DISTANCE * 2, (arrowHeight * TRIANGLE_HEIGHT).toInt())
     private val pointC = Point(START_LINE_ONE_X + DISTANCE, arrowHeight.toInt())
     private val pointD = Point(START_LINE_ONE_X + DISTANCE, START_LINE_ONE_Y)
     private val pointE = Point(START_LINE_ONE_X, START_LINE_ONE_Y)

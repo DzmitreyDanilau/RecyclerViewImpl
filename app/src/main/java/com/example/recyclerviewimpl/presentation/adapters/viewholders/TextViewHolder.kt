@@ -1,6 +1,7 @@
 package com.example.recyclerviewimpl.presentation.adapters.viewholders
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -31,12 +32,20 @@ class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun setArrowRotation(costValue: Int) {
-        if (costValue > 0) {
-            arrow.setColor(true)
-            arrow.animate().rotation(180f).duration = 1000
-        } else if (costValue < 0) {
-
-        } else arrow.visibility = View.INVISIBLE
+        when {
+            costValue > 0 -> arrow.animate().rotation(180f).duration =
+                arrow.getAnimationDurration().toLong()
+            costValue < 0 -> {
+                arrow.setColorFilter(
+                    ContextCompat.getColor(
+                        arrow.context,
+                        R.color.arrowColor_negative
+                    ), android.graphics.PorterDuff.Mode.MULTIPLY
+                )
+                arrow.invalidate()
+            }
+            else -> arrow.visibility = View.INVISIBLE
+        }
 
     }
 }
