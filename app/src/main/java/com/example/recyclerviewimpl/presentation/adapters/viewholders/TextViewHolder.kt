@@ -25,18 +25,19 @@ class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             .error(R.drawable.ic_error_black_24dp)
             .into(itemImage)
         itemTitle.text = item.title
-        //TODO refactor
-        val a = BigDecimal(item.cost).setScale(2, BigDecimal.ROUND_DOWN).toString()
-        setArrowRotation(BigDecimal(item.cost).setScale(2, BigDecimal.ROUND_DOWN).toInt())
-        itemCost.text = a
+        val a = BigDecimal(item.cost).setScale(2, BigDecimal.ROUND_DOWN)
+        setArrowRotation(a.toInt())
+        itemCost.text = a.toString()
     }
 
     private fun setArrowRotation(costValue: Int) {
         if (costValue > 0) {
+            arrow.setColor(true)
             arrow.animate().rotation(180f).duration = 1000
-            arrow.setNegativeColor()
-        } else if (costValue == 0) {
-            arrow.visibility = View.INVISIBLE
-        }
+        } else if (costValue < 0) {
+            arrow.setColor(false)
+//            arrow.animate().rotation(180f).duration = 1000
+        } else arrow.visibility = View.INVISIBLE
+
     }
 }
