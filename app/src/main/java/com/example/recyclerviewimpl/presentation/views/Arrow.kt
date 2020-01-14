@@ -16,14 +16,39 @@ onSizeChanged()
 onMeasure() - call when system must know size of the view
 setMeasuresDemensions() - by this method we set new size
  */
-const val ARROW_HEIGHT_DEF = 100F
-const val ARROW_IS_POSITIVE_DEF = true
-const val DISTANCE = 4
-const val START_LINE_ONE_X = 4
-const val START_LINE_ONE_Y = 0
+/**
+ * Arrow default height
+ */
+private const val ARROW_HEIGHT_DEF = 10F
+/**
+ *Set arrow behaviour is it positive/negative
+ */
+private const val ARROW_IS_POSITIVE_DEF = true
+/**
+ * Distance between to lines of the arrow
+ */
+private const val DISTANCE = 4
+/**
+ * Coordinates of the left line of the arrow
+ */
+private const val START_LINE_ONE_X = 4
+private const val START_LINE_ONE_Y = 0
 
+/**
+ *This value can change free space for the spearhead of the arrow
+ */
+private const val SPEARHEAD_ARROW = 1.3
+/**
+ * Triangle height
+ */
+private const val TRIANGLE_HEIGHT = 0.9
+/**
+ * Arrow paint width
+ */
+private const val ARROW_PAINT_WIDTH = 0.4f
 
-class Arrow(context: Context, attrs: AttributeSet) : TextView(context, attrs) {
+class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
+
     // Set up paints for canvas drawing.
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val arrowWidth: Float
@@ -32,6 +57,7 @@ class Arrow(context: Context, attrs: AttributeSet) : TextView(context, attrs) {
     private var arrowColor = 0
     private var negativeColor: Int
     private var positiveColor: Int
+    private var isAnimated: Boolean
 
     init {
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.Arrow, 0, 0)
@@ -43,12 +69,13 @@ class Arrow(context: Context, attrs: AttributeSet) : TextView(context, attrs) {
             R.styleable.Arrow_color_positive,
             ContextCompat.getColor(context, R.color.arrowColor_positive)
         )
-        arrowWidth = (0.4f * resources.displayMetrics.density)
+        arrowWidth = (ARROW_PAINT_WIDTH * resources.displayMetrics.density)
         arrowPaint.strokeWidth = arrowWidth * resources.displayMetrics.density
         arrowHeight = (typedArray.getDimension(
             R.styleable.Arrow_arrow_height,
             ARROW_HEIGHT_DEF
         ) * resources.displayMetrics.density).roundToInt().toFloat()
+        isAnimated = typedArray.getBoolean(R.styleable.Arrow_isAnimated, true)
         isPositive = typedArray.getBoolean(R.styleable.Arrow_isPositive, ARROW_IS_POSITIVE_DEF)
 
         typedArray.recycle()
@@ -56,15 +83,16 @@ class Arrow(context: Context, attrs: AttributeSet) : TextView(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        setColor(isPositive)
+//        setColor(isPositive)
         drawArrow(canvas)
         invalidate()
     }
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val desiredHeight = (arrowHeight * 1.3 + paddingTop + paddingBottom).roundToInt()
-        val desiredWidth = (arrowWidth * 1.5 + paddingStart + paddingEnd).roundToInt()
+        val desiredHeight =
+            (arrowHeight * SPEARHEAD_ARROW + paddingTop + paddingBottom).roundToInt()
+        val desiredWidth = (arrowWidth + paddingStart + paddingEnd).roundToInt()
         val measureWidth = reconcileSize(desiredWidth, widthMeasureSpec)
         val measureHeight = reconcileSize(desiredHeight, heightMeasureSpec)
         setMeasuredDimension(measureWidth, measureHeight)
@@ -83,8 +111,6 @@ class Arrow(context: Context, attrs: AttributeSet) : TextView(context, attrs) {
 
 
     private fun drawArrow(canvas: Canvas) {
-
-
         canvas.drawLine(
             pointA.x.toFloat(),
             pointA.y.toFloat(),
@@ -146,13 +172,23 @@ class Arrow(context: Context, attrs: AttributeSet) : TextView(context, attrs) {
         isPositive = behviour
     }
 
-    private val pointA = Point(START_LINE_ONE_X + DISTANCE / 2, (arrowHeight * 1.3).toInt())
-    private val pointB = Point(START_LINE_ONE_X + DISTANCE * 2, (arrowHeight * 0.9).toInt())
+
+    fun isAnimated(): Boolean = isAnimated
+
+    fun changeAnimationBehaviour(flag: Boolean) {
+        isAnimated = flag
+    }
+
+
+    private
+
+    val pointA = Point(START_LINE_ONE_X + DISTANCE / 2, (arrowHeight * SPEARHEAD_ARROW).toInt())
+    private val pointB = Point(START_LINE_ONE_X + DISTANCE * 2, (arrowHeight * TRIANGLE_HEIGHT).toInt())
     private val pointC = Point(START_LINE_ONE_X + DISTANCE, arrowHeight.toInt())
     private val pointD = Point(START_LINE_ONE_X + DISTANCE, START_LINE_ONE_Y)
     private val pointE = Point(START_LINE_ONE_X, START_LINE_ONE_Y)
     private val pointF = Point(START_LINE_ONE_X, arrowHeight.toInt())
-    private val pointG = Point(START_LINE_ONE_X - DISTANCE, (arrowHeight * 0.9).toInt())
+    private val pointG = Point(START_LINE_ONE_X - DISTANCE, (arrowHeight * TRIANGLE_HEIGHT).toInt())
 
 
 }

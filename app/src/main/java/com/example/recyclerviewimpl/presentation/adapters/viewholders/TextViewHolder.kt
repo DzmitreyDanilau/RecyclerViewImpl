@@ -35,8 +35,7 @@ class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             arrow.setColor(true)
             arrow.animate().rotation(180f).duration = 1000
         } else if (costValue < 0) {
-            arrow.setColor(false)
-//            arrow.animate().rotation(180f).duration = 1000
+
         } else arrow.visibility = View.INVISIBLE
 
     }
