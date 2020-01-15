@@ -52,14 +52,12 @@ private const val ARROW_PAINT_WIDTH = 0.4f
  */
 private var ANIMATION_DURATION = 1000
 
-class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
-
+class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs), ArrowInterface {
     // Set up paints for canvas drawing.
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val arrowWidth: Float
     private var arrowHeight: Float
     private var arrowState: Boolean
-    private var arrowColor = 0
     private var negativeColor: Int
     private var positiveColor: Int
     private var isAnimated: Boolean
@@ -74,13 +72,16 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
             R.styleable.Arrow_color_positive,
             ContextCompat.getColor(context, R.color.arrowColor_positive)
         )
-        arrowWidth = (ARROW_PAINT_WIDTH * resources.displayMetrics.density)
-        arrowPaint.strokeWidth = arrowWidth * resources.displayMetrics.density
-        arrowPaint.color = positiveColor
         arrowHeight = (typedArray.getDimension(
             R.styleable.Arrow_arrow_height,
             ARROW_HEIGHT_DEF
         ) * resources.displayMetrics.density).roundToInt().toFloat()
+        arrowWidth = (ARROW_PAINT_WIDTH * resources.displayMetrics.density)
+        isAnimated = typedArray.getBoolean(R.styleable.Arrow_isAnimated, true)
+        arrowState = typedArray.getBoolean(R.styleable.Arrow_isPositive, ARROW_STATE_DEF)
+        arrowPaint.strokeWidth = arrowWidth * resources.displayMetrics.density
+        arrowPaint.color = positiveColor
+
         isAnimated = typedArray.getBoolean(R.styleable.Arrow_isAnimated, true)
         arrowState = typedArray.getBoolean(R.styleable.Arrow_isPositive, ARROW_STATE_DEF)
         typedArray.recycle()
@@ -165,16 +166,7 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
         )
     }
 
-    fun setColor(isPositive: Boolean) {
-        arrowPaint.color = if (isPositive) positiveColor else negativeColor
-        invalidate()
-    }
-
     fun isAnimated(): Boolean = isAnimated
-
-    fun changeAnimationBehaviour(flag: Boolean) {
-        isAnimated = flag
-    }
 
     fun getAnimationDurration() = ANIMATION_DURATION
 
@@ -182,6 +174,14 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
         ANIMATION_DURATION = duration
     }
 
+    override fun changeAnimationBehaviour(flag: Boolean) {
+        isAnimated = flag
+    }
+
+    override fun setColor(isPositive: Boolean) {
+        arrowPaint.color = if (isPositive) positiveColor else negativeColor
+        invalidate()
+    }
 
     val pointA = Point(START_LINE_ONE_X + DISTANCE / 2, (arrowHeight * SPEARHEAD_ARROW).toInt())
     private val pointB =

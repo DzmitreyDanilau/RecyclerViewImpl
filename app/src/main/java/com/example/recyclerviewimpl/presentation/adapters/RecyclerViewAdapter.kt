@@ -14,9 +14,6 @@ import com.example.recyclerviewimpl.utils.TYPE_TEXT
 class RecyclerViewAdapter :
     ListAdapter<Item, RecyclerView.ViewHolder>(TextItemsDiffUtilsCallBack()) {
 
-//    private var itemsList = mutableListOf<Item>()
-//    fun getItemList() = get
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
             TYPE_TEXT -> {
@@ -39,7 +36,6 @@ class RecyclerViewAdapter :
             }
         }
     }
-
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
