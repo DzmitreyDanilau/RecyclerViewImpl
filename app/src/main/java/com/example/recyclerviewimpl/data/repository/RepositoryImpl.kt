@@ -9,7 +9,7 @@ class RepositoryImpl @Inject constructor() : Repository {
     private val itemList: MutableList<Item> = mutableListOf(
         Item(
             0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
-            "Item #1", -1241.55
+            "Item #1", 12.55
         ),
         Item(
             1, "https://upload.wikimedia.org/wikipedia/commons/2/29/Beetroot_jm26647.jpg",
@@ -25,7 +25,7 @@ class RepositoryImpl @Inject constructor() : Repository {
             0,
             "https://upload.wikimedia.org/wikipedia/commons/e/e4/Branch_and_fruit_of_the_Maluma_avocado_cultivar.jpg",
             "Item #4",
-            -555.434324234
+            555.434324234
         ),
         Item(
             1, "https://upload.wikimedia.org/wikipedia/commons/0/03/Grape_Plant_and_grapes9.jpg",
@@ -36,6 +36,54 @@ class RepositoryImpl @Inject constructor() : Repository {
             "https://upload.wikimedia.org/wikipedia/commons/2/22/Apfelsinenbaum--Orange_tree.jpg",
             "Item #6",
             12.3455976678
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", -44.25
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", -55.3
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", -24.555
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", 87.55
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", 121.55
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", -24.555
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", -24.555
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", -24.555
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", 24.555
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", -24.555
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", 24.555
+        ),
+        Item(
+            0, "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_orchard_in_Tasmania.jpg",
+            "Item #1", 24.555
         )
     )
 

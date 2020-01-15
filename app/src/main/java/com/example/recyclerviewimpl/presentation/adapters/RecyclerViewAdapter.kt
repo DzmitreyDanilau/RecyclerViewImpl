@@ -44,7 +44,9 @@ class RecyclerViewAdapter :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         when (getItemViewType(position)) {
-            TYPE_TEXT -> (holder as TextViewHolder).bind(item)
+            TYPE_TEXT -> {
+                (holder as TextViewHolder).bind(item)
+            }
             else -> (holder as ImgViewHolder).bind(item)
         }
     }

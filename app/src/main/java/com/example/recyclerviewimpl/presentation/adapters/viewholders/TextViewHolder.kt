@@ -16,6 +16,7 @@ class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val itemTitle = view.tv_item_title
     private val itemCost = view.tv_item_cost
     private val arrow = view.arrow
+    private var isRotated = false
 
     fun bind(item: Item) {
         val glideRequest = RequestOptions().placeholder(R.drawable.ic_launcher_background)
@@ -33,16 +34,19 @@ class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private fun setArrowRotation(costValue: Int) {
         when {
-            costValue > 0 -> arrow.animate().rotation(180f).duration =
-                arrow.getAnimationDurration().toLong()
+            costValue > 0 -> {
+                arrow.setColor(true)
+                if(!isRotated){
+                    arrow.animate().rotation(180f).duration = arrow.getAnimationDurration().toLong()
+                    isRotated = true
+                }
+            }
             costValue < 0 -> {
-                arrow.setColorFilter(
-                    ContextCompat.getColor(
-                        arrow.context,
-                        R.color.arrowColor_negative
-                    ), android.graphics.PorterDuff.Mode.MULTIPLY
-                )
-                arrow.invalidate()
+                arrow.setColor(false)
+                if(isRotated){
+                    arrow.animate().rotation(360f).duration = arrow.getAnimationDurration().toLong()
+                    isRotated= false
+                }
             }
             else -> arrow.visibility = View.INVISIBLE
         }

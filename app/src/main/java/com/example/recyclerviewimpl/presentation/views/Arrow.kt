@@ -52,7 +52,7 @@ private const val ARROW_PAINT_WIDTH = 0.4f
  */
 private var ANIMATION_DURATION = 1000
 
-class Arrow(context: Context, attrs: AttributeSet) : ImageView(context, attrs) {
+class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     // Set up paints for canvas drawing.
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -76,6 +76,7 @@ class Arrow(context: Context, attrs: AttributeSet) : ImageView(context, attrs) {
         )
         arrowWidth = (ARROW_PAINT_WIDTH * resources.displayMetrics.density)
         arrowPaint.strokeWidth = arrowWidth * resources.displayMetrics.density
+        arrowPaint.color = positiveColor
         arrowHeight = (typedArray.getDimension(
             R.styleable.Arrow_arrow_height,
             ARROW_HEIGHT_DEF
@@ -87,9 +88,7 @@ class Arrow(context: Context, attrs: AttributeSet) : ImageView(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        setColor(arrowState)
         drawArrow(canvas)
-        invalidate()
     }
 
 
@@ -166,18 +165,9 @@ class Arrow(context: Context, attrs: AttributeSet) : ImageView(context, attrs) {
         )
     }
 
-    fun setColor(flag: Boolean) {
-        arrowPaint.color = positiveColor
-    }
-
-    fun setState(behviour: Boolean) {
-        arrowState = behviour
-    }
-
-    fun swapColor() {
-        if (arrowPaint.color == positiveColor) {
-            arrowPaint.color = negativeColor
-        } else arrowPaint.color = positiveColor
+    fun setColor(isPositive: Boolean) {
+        arrowPaint.color = if (isPositive) positiveColor else negativeColor
+        invalidate()
     }
 
     fun isAnimated(): Boolean = isAnimated
