@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,6 +10,7 @@
             name="imageItem"
             type="com.example.recyclerviewimpl.data.models.Item" />
     </data>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
@@ -18,16 +20,25 @@
         android:layout_marginBottom="@dimen/app_margin"
         app:cardElevation="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image"
-            android:layout_width="@dimen/image_item_img_width"
-            android:layout_height="@dimen/image_item_img_height"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/app_margin"
-            android:layout_marginBottom="@dimen/app_margin"
-            android:scaleType="centerCrop"
-            app:viewHolderImageSetup="@{imageItem}" />
-    </androidx.cardview.widget.CardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/app_margin"
+                android:layout_marginBottom="@dimen/app_margin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_percent="0.5"
+                tools:src = "@drawable/ic_error_black_24dp"
+                app:viewHolderImageSetup="@{imageItem}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </layout>
