@@ -25,7 +25,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/app_margin"
             android:layout_marginBottom="@dimen/app_margin"
+            android:scaleType="centerCrop"
             app:viewHolderImageSetup="@{imageItem}" />
     </androidx.cardview.widget.CardView>
+
 
 </layout>

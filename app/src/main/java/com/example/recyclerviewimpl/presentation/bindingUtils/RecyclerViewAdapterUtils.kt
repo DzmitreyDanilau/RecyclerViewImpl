@@ -41,6 +41,7 @@ fun Arrow.rotateArrow(item: Item) {
 
 private fun setupGlide(view: ImageView, path: String) {
     val glideRequest = RequestOptions().placeholder(R.drawable.ic_launcher_background)
+
     Glide.with(view)
         .setDefaultRequestOptions(glideRequest)
         .load(path)
