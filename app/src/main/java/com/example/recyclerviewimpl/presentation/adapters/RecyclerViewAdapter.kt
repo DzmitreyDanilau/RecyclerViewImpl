@@ -8,15 +8,14 @@ import com.example.recyclerviewimpl.R
 import com.example.recyclerviewimpl.data.models.Item
 import com.example.recyclerviewimpl.presentation.adapters.viewholders.ImgViewHolder
 import com.example.recyclerviewimpl.presentation.adapters.viewholders.TextViewHolder
-import com.example.recyclerviewimpl.utils.TYPE_IMG
-import com.example.recyclerviewimpl.utils.TYPE_TEXT
+import com.example.recyclerviewimpl.utils.ViewHolderTypes
 
 class RecyclerViewAdapter :
     ListAdapter<Item, RecyclerView.ViewHolder>(TextItemsDiffUtilsCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
-            TYPE_TEXT -> {
+            ViewHolderTypes.TYPE_TEXT.value -> {
                 return TextViewHolder(
                     LayoutInflater.from(parent.context).inflate(
                         R.layout.text_item,
@@ -40,7 +39,7 @@ class RecyclerViewAdapter :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         when (getItemViewType(position)) {
-            TYPE_TEXT -> {
+            ViewHolderTypes.IMG_TYPE.value -> {
                 (holder as TextViewHolder).bind(item)
             }
             else -> (holder as ImgViewHolder).bind(item)
@@ -49,8 +48,8 @@ class RecyclerViewAdapter :
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position).order) {
-            0 -> TYPE_TEXT
-            else -> TYPE_IMG
+            0 -> ViewHolderTypes.TYPE_TEXT.value
+            else -> ViewHolderTypes.IMG_TYPE.value
         }
     }
 
