@@ -183,6 +183,35 @@ class Arrow(context: Context, attrs: AttributeSet) : View(context, attrs), Arrow
         invalidate()
     }
 
+    fun setArrowRotation(costValue: Int) {
+        var isRotated = false
+        when {
+            costValue > 0 -> {becomeNegative(isRotated)}
+            costValue < 0 -> {becomePositive(isRotated)}
+            else -> this.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun becomePositive(isRotated: Boolean) {
+        var isRotated1 = isRotated
+        this.setColor(false)
+        if (isRotated1) {
+            this.animate().rotation(360f).duration =
+                this.getAnimationDurration().toLong()
+            isRotated1 = false
+        }
+    }
+
+    private fun becomeNegative(isRotated: Boolean) {
+        var isRotated1 = isRotated
+        this.setColor(true)
+        if (!isRotated1) {
+            this.animate().rotation(180f).duration =
+                this.getAnimationDurration().toLong()
+            isRotated1 = true
+        }
+    }
+
     val pointA = Point(START_LINE_ONE_X + DISTANCE / 2, (arrowHeight * SPEARHEAD_ARROW).toInt())
     private val pointB =
         Point(START_LINE_ONE_X + DISTANCE * 2, (arrowHeight * TRIANGLE_HEIGHT).toInt())

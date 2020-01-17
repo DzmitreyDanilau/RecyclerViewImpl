@@ -2,14 +2,18 @@ package com.example.recyclerviewimpl.presentation
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recyclerviewimpl.R
 import com.example.recyclerviewimpl.data.models.Item
+import com.example.recyclerviewimpl.databinding.FragmentRecyclerBinding
 import com.example.recyclerviewimpl.presentation.adapters.RecyclerViewAdapter
 import com.example.recyclerviewimpl.presentation.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_recycler.*
@@ -17,7 +21,6 @@ import timber.log.Timber
 import kotlin.reflect.KClass
 
 class RecyclerFragment : BaseFragment<RecyclerViewModel>() {
-
     private lateinit var recyclerViewAdapter: RecyclerViewAdapter
     private lateinit var progressBar: ProgressBar
 
@@ -33,6 +36,20 @@ class RecyclerFragment : BaseFragment<RecyclerViewModel>() {
         Timber.d("onAttach")
         (activity as RecyclerActivity).appComponent.inject(this)
         initViewModel()
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        val binding = DataBindingUtil.inflate<FragmentRecyclerBinding>(
+            inflater,
+            fragmentResId,
+            container,
+            false
+        )
+        binding.recyclerViewModel = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
