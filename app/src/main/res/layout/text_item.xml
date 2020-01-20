@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/app_margin"
         android:layout_marginBottom="@dimen/app_margin"
-        app:cardElevation="10dp">
+        app:cardElevation="@dimen/card_view_elevation">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout"
@@ -38,7 +38,7 @@
 
             <TextView
                 android:id="@+id/tv_item_title"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_item_cost"
@@ -61,10 +61,10 @@
 
             <com.example.recyclerviewimpl.presentation.views.Arrow
                 android:id="@+id/arrow"
-                android:layout_width="5dp"
+                android:layout_width="@dimen/arrow_dimen"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                app:arrow_height="5dp"
+                app:arrow_height="@dimen/arrow_dimen"
                 app:layout_constraintBottom_toBottomOf="@id/tv_item_cost"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_item_cost"

@@ -4,4 +4,7 @@
     <dimen name="image_item_img_height">250dp</dimen>
     <dimen name="app_margin">8dp</dimen>
     <dimen name="text_item_img_size">50dp</dimen>
+    <dimen name="progressbar_dimen">50dp</dimen>
+    <dimen name="card_view_elevation">10dp</dimen>
+    <dimen name="arrow_dimen">5dp</dimen>
 </resources>
